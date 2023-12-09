@@ -1,0 +1,29 @@
+http:
+  routers:
+    nextjs:
+      rule: "Host(`nextjs.localhost`)"
+      service: "nextjs-service"
+      entryPoints:
+        - http
+        - https
+      tls: {}
+
+  services:
+    nextjs-service:
+      loadBalancer:
+        servers:
+          - url: "http://localhost:3000"
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: certs/cert.pem
+        keyFile: certs/key.pem
+  certificates:
+    - certFile: certs/cert.pem
+      keyFile: certs/key.pem
+      stores:
+        - default
+    - certFile: certs/cert.pem
+      keyFile: certs/key.pem
